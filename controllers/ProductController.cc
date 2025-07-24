@@ -6,17 +6,21 @@ void ProductController::getProducts(const HttpRequestPtr& req, std::function<voi
     auto clientPtr  = app().getDbClient();
     clientPtr->execSqlAsync(
         "SELECT * FROM product",
-        [](const drogon::orm::Result &result)
+        [callback](const drogon::orm::Result &result)
         {
-            std::cout << result.size() << " rows selected!" << std::endl;
-            int i = 1;
-            for (auto row : result)
+            Json::Value jsonResponse = Json::arrayValue;
+            for (const auto &row : result)
             {
-                std::cout << i++ << ": product name is " << row["name"].as<std::string>() << std::endl;
+                Json::Value product;
+                product["id"]  = row["id"].as<int>();
+                product["name"] = row["name"].as<std::string>();
+                product["price"] = row["price"].as<double>();
+                jsonResponse.append(product);
             }
+            auto res = HttpResponse::newHttpJsonResponse(jsonResponse);
+            callback(res);
         },
         [](const drogon::orm::DrogonDbException &e) {
-            std::cerr << "error:" << e.base().what() << std::endl;
-        }
+            std::cerr << "error:" << e.base().what() << std::endl;}
         );
 }

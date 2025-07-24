@@ -1,6 +1,7 @@
 #pragma once
 
 #include <drogon/HttpController.h>
+#include <json/json.h>
 
 using namespace drogon;
 
