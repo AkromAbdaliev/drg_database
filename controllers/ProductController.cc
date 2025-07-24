@@ -9,7 +9,7 @@ void ProductController::getProducts(const HttpRequestPtr& req, std::function<voi
         "SELECT * FROM product",
         [callback](const drogon::orm::Result &result)
         {
-            Json::Value jsonResponse = Json::arrayValue;
+            Json::Value jsonResponse(Json::arrayValue);
             for (const auto &row : result)
             {
                 Json::Value product;
@@ -25,7 +25,6 @@ void ProductController::getProducts(const HttpRequestPtr& req, std::function<voi
 
             Json::Value error;
             error["error"] = e.base().what();
-            error["code"] = 500;
 
             auto resp = HttpResponse::newHttpJsonResponse(error);
             resp->setStatusCode(k500InternalServerError);
@@ -49,7 +48,7 @@ void ProductController::getProduct(const HttpRequestPtr& req, std::function<void
                 return;
             }
 
-            const auto &row = result[0];
+            const auto &row = result.front(); // equal to -> result[0]
             Json::Value product;
             product["id"] = row["id"].as<int>();
             product["name"] = row["name"].as<std::string>();
@@ -61,31 +60,10 @@ void ProductController::getProduct(const HttpRequestPtr& req, std::function<void
         [callback](const drogon::orm::DrogonDbException& e) {
         Json::Value error;
         error["error"] = e.base().what();
-        error["code"] = 500;
 
         auto resp = HttpResponse::newHttpJsonResponse(error);
         resp->setStatusCode(k500InternalServerError);
         callback(resp);
     }, pId);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

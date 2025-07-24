@@ -1,5 +1,6 @@
 #include <drogon/drogon.h>
 #include "ProductController.h"
+#include "UserController.h"
 
 int main() {
     //Set HTTP listener address and port

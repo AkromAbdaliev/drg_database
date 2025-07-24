@@ -310,9 +310,6 @@
 		{
 			"isExternal" : true,
 			"path" : "/usr/local/lib/cmake/Drogon/ParseAndAddDrogonTests.cmake"
-		},
-		{
-			"path" : "test/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",
