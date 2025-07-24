@@ -1,0 +1,39 @@
+{
+
+    "listeners": [
+        {
+
+            "address": "0.0.0.0",
+
+            "port": 5555,
+
+            "https": false
+        },
+    ],
+    "db_clients": [
+        {
+
+            "name": "default",
+
+            "rdbms": "postgresql",
+
+            "host": "127.0.0.1",
+
+            "port": 5432,
+
+            "dbname": "drg_database",
+
+            "user": "postgres",
+
+            "passwd": "password",
+
+            "is_fast": false,
+
+            "number_of_connections": 1,
+
+            "timeout": -1.0,
+
+            "auto_batch": false
+        }
+    ],
+}
